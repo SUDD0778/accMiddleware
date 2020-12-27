@@ -1,0 +1,3 @@
+exports.ACCESS_SECRET = "ACCEDO_SECRET";
+
+
