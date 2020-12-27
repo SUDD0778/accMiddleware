@@ -1,9 +1,9 @@
 'use strict';
 
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-var FavouriteSchema = new Schema({
+const FavouriteSchema = new Schema({
     userId: String,
     movieInfo: Object,
     timestamp : {

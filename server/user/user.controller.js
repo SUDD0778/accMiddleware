@@ -6,13 +6,12 @@ const User = require('./user.model');
 const ACCESS_SECRET = require('../secret').ACCESS_SECRET;
 
 exports.signUp = function (req, res) {
-	console.log("signUp");
 	try{
 		let user = {};
 		user.name = req.body.username;
 			bcrypt.hash(req.body.password,10,(err,hashedPassword)=>{
 				user.password = hashedPassword;
-				var newUser = new User(user);
+				let newUser = new User(user);
 				newUser.save(function (err, user) {
 					if (err) return validationError(res, err);
 					return res.send({success : true})
@@ -34,7 +33,7 @@ exports.login = function (req, res) {
 				if(!result){
 					return res.status(401).json({message : "Incorrect Password"})
 				}else{
-					let token = jwt.sign({username : req.body.username},ACCESS_SECRET);
+					let token = jwt.sign({username : req.body.username},ACCESS_SECRET, {expiresIn : 60 * 6});
 					return res.status(200).json({message : "Authenticated",token, userId : user._id});
 				}
 			})
@@ -47,9 +46,9 @@ exports.login = function (req, res) {
 
 exports.changePassword = function(req, res) {
 
-	    var name = req.body.username;
-	    var oldPass = String(req.body.oldPassword);
-	    var newPass = String(req.body.newPassword);
+	let name = req.body.username;
+	let oldPass = String(req.body.oldPassword);
+	let newPass = String(req.body.newPassword);
 
 	    User.findOne({name : name}, function(err, user) {
 	        if(err)
@@ -61,7 +60,7 @@ exports.changePassword = function(req, res) {
 	                }else{
 	                    bcrypt.hash(newPass,10,(err,hashedPassword)=>{
 	                        user.password = hashedPassword;
-	                        var newUser = new User(user);
+	                        let newUser = new User(user);
 	                        newUser.save(function (err, user) {
 	                            if (err) return validationError(res, err);
 	                            return res.send({success : true})
@@ -73,23 +72,8 @@ exports.changePassword = function(req, res) {
 	            return res.status(404).json({message : "user not found"})
 	        }
 	    });
-	
-//      User.findOne({name : name}, function (err, user) {
-// 	       if(err)
-// 	      return res.status(404).json({message : "user not found"})
-// 	       if(user.authenticate(oldPass)) {
-// 	      user.password = newPass;
-// 	      user.save(function(err, user) {
-// 	        if (err) {console.log(err); return validationError(res, err);}
-// 	        logger.user('info', {user_id: user._id, message: 'Password changed.'});
-// 	        res.send(200);
-// 	      });
-// 	       } else {
-// 	      res.send(403);
-// 	       }
-// 	     });
 	  };
 
-var validationError = function(res, err) {
+let validationError = function(res, err) {
 	return res.json(422, err);
 };

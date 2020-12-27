@@ -1,13 +1,14 @@
 'use strict';
 
-var express = require('express');
-var controller = require('./userActivity.controller');
-var auth = require('../auth');
+const express = require('express');
+const controller = require('./userActivity.controller');
+const auth = require('../services/auth');
 
-var router = express.Router();
 
-router.get('/fetchHistoryByUserId', controller.fetchHistoryByUserId);
-router.get('/fetchFavouriteByUserId', controller.fetchFavouriteByUserId);
-router.post('/setFavouriteMovie', controller.setFavouriteMovie);
+const router = express.Router();
+
+router.get('/fetchHistoryByUserId', auth.isAuthenticated, controller.fetchHistoryByUserId);
+router.get('/fetchFavouriteByUserId', auth.isAuthenticated, controller.fetchFavouriteByUserId);
+router.post('/setFavouriteMovie', auth.isAuthenticated, controller.setFavouriteMovie);
 
 module.exports = router;

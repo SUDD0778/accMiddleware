@@ -1,10 +1,11 @@
-var express = require('express');
-var controller = require('./user.controller');
+const express = require('express');
+const controller = require('./user.controller');
+const auth = require('../services/auth');
 
-var router = express.Router();
+const router = express.Router();
 
 router.post('/login', controller.login);
 router.post('/signUp', controller.signUp);
-router.post('/changePassword', controller.changePassword);
+router.post('/changePassword', auth.isAuthenticated, controller.changePassword);
 
 module.exports = router;

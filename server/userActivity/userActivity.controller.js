@@ -1,11 +1,10 @@
 'use strict';
 
-var _ = require('lodash');
-var FavouriteMovie = require('./favouriteMovie.model.js');
-var MovieHistory = require('./movieHistory.model.js');
-var Q = require('q');
-var mongoose = require('mongoose');
-var ObjectId = mongoose.Types.ObjectId;
+const _ = require('lodash');
+const FavouriteMovie = require('./favouriteMovie.model.js');
+const MovieHistory = require('./movieHistory.model.js');
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 exports.setFavouriteMovie = function(req, res) {
 
@@ -14,9 +13,9 @@ exports.setFavouriteMovie = function(req, res) {
     else if(typeof req.body.favMovieFlag != 'boolean') return handleError(res, "favourite Movie Flag  must be boolena");
     if(!req.body.movieId) return handleError(res, "Movie Id not found", res);
 
-    var userId = req.body.userId;
-    var favMovieFlag = req.body.favMovieFlag;
-    var movieId = req.body.movieId;
+    let userId = req.body.userId;
+    let favMovieFlag = req.body.favMovieFlag;
+    let movieId = req.body.movieId;
     
     FavouriteMovie.findOne({userId : new ObjectId(userId)}, function(err, activity){
         if(err) handleError(res, err);
@@ -53,7 +52,7 @@ exports.setFavouriteMovie = function(req, res) {
 exports.fetchHistoryByUserId = function(req, res) {
     if(!req.query.userId) return handleError("User Id not found", res);
 
-    var userId = req.query.userId;
+    let userId = req.query.userId;
     MovieHistory.find({userId : userId}).sort({timestamp : -1}).exec(function(err, history) {
         if(err) handleError(res, err);
         res.status(200).send(history);
@@ -63,7 +62,7 @@ exports.fetchHistoryByUserId = function(req, res) {
 exports.fetchFavouriteByUserId = function(req, res) {
     if(!req.query.userId) return handleError("User Id not found", res);
 
-    var userId = req.query.userId;
+    let userId = req.query.userId;
     FavouriteMovie.find({userId : userId}).sort({timestamp : -1}).exec(function(err, history) {
         if(err) handleError(res, err);
         res.status(200).send(history);

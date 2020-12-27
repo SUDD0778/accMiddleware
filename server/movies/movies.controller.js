@@ -1,11 +1,11 @@
 'use strict';
 
-let _ = require('lodash');
-let Movies = require('./movies.model.js');
-let MovieHistory = require('../userActivity/movieHistory.model.js');
-let request = require('request');
-let Q = require('q');
-let async = require('async');
+const _ = require('lodash');
+const Movies = require('./movies.model.js');
+const MovieHistory = require('../userActivity/movieHistory.model.js');
+const request = require('request');
+const Q = require('q');
+const async = require('async');
 
 exports.fetchMoviesfromApi = function(req, res) {
     
@@ -25,8 +25,8 @@ exports.fetchMoviesfromApi = function(req, res) {
 
 exports.getMovieById = function(req, res) {
 
-    if(!req.query.userId) return handleError("User Id not found", res);
-    if(!req.query.movieId) return handleError("Movie Id not found", res);
+    if(!req.query.userId) return handleError(res ,"User Id not found");
+    if(!req.query.movieId) return handleError(res, "Movie Id not found");
     let userId = req.query.userId;
     let movieId = req.query.movieId;
 
@@ -103,7 +103,7 @@ exports.fetchMovies = function(req, res) {
         skip = Number(req.query.skip);
     if(req.query.limit)
         limit = Number(req.query.limit);
-        
+
     Movies.find(query, projection).skip(skip).limit(limit).exec(function(err, movie){
         if(err) handleError(res, err);
         if(!movie)  {
@@ -125,7 +125,7 @@ function recordHistory (userId, movieId) {
         movieId : movieId,
     };
 
-    MovieHistory.save(historyObj, function(err, history) {
+    MovieHistory.updateOne({userId : userId},historyObj,{upsert : true}, function(err, history){
         if(err) deferred.reject(err);
         if(!history) deferred.reject(err);
         deferred.resolve(true);

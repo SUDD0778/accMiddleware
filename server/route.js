@@ -1,5 +1,5 @@
 "use strict";
-const AUTH = require('./auth');
+// const AUTH = require('./services/auth.controller');
 const cors = require('cors');
 
 module.exports = (app)=>{
