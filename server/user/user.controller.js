@@ -33,7 +33,7 @@ exports.login = function (req, res) {
 				if(!result){
 					return res.status(401).json({message : "Incorrect Password"})
 				}else{
-					let token = jwt.sign({username : req.body.username},ACCESS_SECRET, {expiresIn : 60 * 6});
+					let token = jwt.sign({username : req.body.username},ACCESS_SECRET, {expiresIn : 60 * 60 * 24});
 					return res.status(200).json({message : "Authenticated",token, userId : user._id});
 				}
 			})

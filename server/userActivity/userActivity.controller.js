@@ -42,7 +42,7 @@ exports.setFavouriteMovie = function(req, res) {
                     delete activity.movieInfo[movieId];
             }
         }
-        FavouriteMovie.update({userId : userId},activity,{upsert : true}, function(err, activity) {
+        FavouriteMovie.updateOne({userId : userId},activity,{upsert : true}, function(err, activity) {
             if(err) handleError(res, err);
             res.status(200).json({success : true});
         });

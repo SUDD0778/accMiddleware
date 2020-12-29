@@ -51,7 +51,7 @@ exports.getMovieById = function(req, res) {
 
 exports.fetchMovies = function(req, res) {
 
-    if(!req.query.userId) return handleError("User Id not found", res);
+    if(!req.query.userId) return handleError(res, "User Id not found");
     let query = {},
         projection = {},
         limit = 0,

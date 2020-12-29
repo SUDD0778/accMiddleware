@@ -1,12 +1,15 @@
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
 const path = require('path');
 const cors = require('cors');
-const winston = require('winston');
+var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 app.use(express.json());
-
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 require('./route')(app);
 require('mongoose').connect('mongodb+srv://root:root@cluster0.yebyt.mongodb.net/VOD1', {useNewUrlParser: true, useUnifiedTopology: true});
 app.use('/api/v1/*', cors());

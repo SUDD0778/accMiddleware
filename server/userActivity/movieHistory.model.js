@@ -6,9 +6,7 @@ var mongoose = require('mongoose'),
 var HistorySchema = new Schema({
     userId: String,
     movieInfo: Object,
-    timestamp : {
-        type : Date
-    },
+    timestamp : Date
 });
 HistorySchema.index({timestamp: -1});
 

@@ -37,7 +37,7 @@ MoviesSchema
       respond(true);
     });
 }, 'The movie id is already in this collection.');
-
 MoviesSchema.index({id: 1});
+MoviesSchema.index({availableDate: -1});
 module.exports = mongoose.model('MoviesSchema', MoviesSchema);
 

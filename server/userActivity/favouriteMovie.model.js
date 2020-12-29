@@ -6,9 +6,8 @@ const mongoose = require('mongoose'),
 const FavouriteSchema = new Schema({
     userId: String,
     movieInfo: Object,
-    timestamp : {
-        type : Date
-    },
+    timestamp : Date
 });
+FavouriteSchema.index({timestamp: -1});
 
 module.exports = mongoose.model('FavouriteSchema', FavouriteSchema);
