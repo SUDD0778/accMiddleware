@@ -1,8 +1,25 @@
 # basic app
 
+#prerequisites
+
+Install latest Node version and mocha are required for testing API
+
+Mongodb is required for this project
+
+Steps to be followed- 
+
+1. Clone this repository https://github.com/SUDD0778/accMiddleware
+
+2. Run Npm install 
+
+3. Start node server by running server/app.js file
+
+4. Once server start running following api's can be tested
+
+
 Some info about the APIs
 
-3 APIs :
+APIs :
 
 ########## Public Endpoint ##########
   LOGIN 

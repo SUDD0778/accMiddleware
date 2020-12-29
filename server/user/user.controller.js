@@ -7,6 +7,9 @@ const ACCESS_SECRET = require('../secret').ACCESS_SECRET;
 
 exports.signUp = function (req, res) {
 	try{
+		if(!req.body.username) return handleError(res, "User name not found");
+		if(!req.body.password) return handleError(res, "User password not found");
+
 		let user = {};
 		user.name = req.body.username;
 			bcrypt.hash(req.body.password,10,(err,hashedPassword)=>{
@@ -23,6 +26,9 @@ exports.signUp = function (req, res) {
 };
 
 exports.login = function (req, res) {
+	if(!req.body.username) return handleError(res, "User name not found");
+	if(!req.body.password) return handleError(res, "User password not found");
+
 	User.findOne({name : req.body.username}, function(err, user) {
 		if(err)
 			return res.status(404).json({message : "user not found"})
@@ -45,6 +51,9 @@ exports.login = function (req, res) {
 }
 
 exports.changePassword = function(req, res) {
+	if(!req.body.username) return handleError(res, "User name not found");
+	if(!req.body.oldPassword) return handleError(res, "Old password not found");
+	if(!req.body.newPassword) return handleError(res, "New password not found");
 
 	let name = req.body.username;
 	let oldPass = String(req.body.oldPassword);
@@ -77,3 +86,7 @@ exports.changePassword = function(req, res) {
 let validationError = function(res, err) {
 	return res.json(422, err);
 };
+
+function handleError(res, err) {
+    return res.status(500).send(err);
+}

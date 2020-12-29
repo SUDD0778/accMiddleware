@@ -2,14 +2,13 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const crypto = require('crypto');
 
 const UserSchema = new Schema({
   name: String,
-  email: { type: String, lowercase: true },
-  hashedPassword: String,
-  salt: String,
-  created  : Date,
+  created  : {
+    type : Date,
+    deafult : Date.now()
+  },
   password : String
 });
 
