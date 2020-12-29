@@ -117,13 +117,22 @@ LOGS
 
 FETCH LOGS
 
+Parameter - level // required can be set to info for logs and error for error logs
+Parameter - searchQuery // to search anything present in query string 
+Parameter - statusCode // to search by status code
+Parameter - skip // by deafult 0
+Parameter - limit // by deafult 10
+Parameter - projection // can pass projection 
+Parameter - fromDate and toDate  // can passed to fetch data in date range
+
+
 Request : {
     method : "GET",
     headers : {
       Authorization : "token",
       content-type : "application/json"
     },    
-    url : "/api/v1/logs/fetchLogs?userId=5fe887b0ebdb5a066c395ddf&message=get&skip=0&limit=5"
+    url : "/api/v1/logs/fetchLogs?userId=5fe887b0ebdb5a066c395ddf&searchQuery=get&skip=0&limit=5"
  }, 
 
 

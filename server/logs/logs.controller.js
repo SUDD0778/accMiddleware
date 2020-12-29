@@ -27,12 +27,6 @@ exports.fetchLogs = function(req, res) {
         let toDate = new Date(req.query.toDate).toISOString();
         query.timestamp = {$gte : fromDate, $lte : toDate};
     }
-    //search by response time
-    if(req.query.responseTimeFrom && req.query.responseTimeTo) {
-        req.query.responseTimeFrom = Number(req.query.responseTimeFrom);
-        req.query.responseTimeTo = Number(req.query.responseTimeTo);
-        query['meta.responseTime'] = {$gte : req.query.responseTimeFrom , $lt : req.query.responseTimeTo};
-    }
 
     if(req.query.statusCode) {
         query['meta.res.statusCode'] = Number(req.query.statusCode);   
